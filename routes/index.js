@@ -7,7 +7,7 @@ router.get('/:slug', async (req, res) => {
   // TODO: Validate URL and redirect to original URL on GET req
   try {
     const url = await Url.findOne({ slug })
-    console.log('url', url)
+    // console.log('url', url)
 
     if (!url) {
       return res.status(404).json({ success: false, message: 'URL not found or valid' })

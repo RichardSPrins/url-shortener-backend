@@ -43,6 +43,7 @@ router.post('/snip', async (req, res) => {
       }
     } catch (error) {
       console.error(error.message)
+      res.status(500).json(error.message)
     }
   } else {
     res.status(500).json({ success: false, message: 'URL entered is not valid' })
@@ -60,6 +61,7 @@ router.get('/info/:id', async (req, res) => {
   console.log('id', id)
   try {
     const url = await Url.findOne({ slug: id })
+    console.log(url)
     if (!url) {
       return res.status(404).json({ success: false, message: 'URL Snip not found' })
     }

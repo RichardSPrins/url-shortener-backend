@@ -5,8 +5,10 @@ const connectDB = require('./db')
 const urlRoute = require('./routes/url')
 const redirectRoute = require('./routes/index')
 const cors = require('cors')
+const bp = require('body-parser')
 
 app.use(express.json({ extended: false }))
+app.use(bp.json())
 app.use(cors())
 
 connectDB();

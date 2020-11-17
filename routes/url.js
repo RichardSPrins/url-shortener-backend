@@ -4,6 +4,7 @@ const Url = require('../db/models/Url')
 const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8)
 require('dotenv').config()
+const qrcode = require('qrcode')
 
 /* 
   {route}:      POST /api/url/snip
@@ -31,14 +32,17 @@ router.post('/snip', async (req, res) => {
         res.json({ success: true, message: 'URL already Snipped', data: url })
       } else {
         const shortUrl = `${baseUrl}/${slug}`
+        const qrCode = await qrcode.toDataURL(longUrl)
 
         url = new Url({
           shortUrl,
           slug,
-          ogUrl: longUrl
+          ogUrl: longUrl,
+          qrCode: qrCode
         })
 
         await url.save()
+
         res.status(200).json({ success: true, message: 'URL snipped.', data: url })
       }
     } catch (error) {
